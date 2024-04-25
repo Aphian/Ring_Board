@@ -23,7 +23,8 @@ class BoardApplicationTests {
     public void testByApplicationContext() {
         try {
             System.out.println("=========================");
-            System.out.println(context.getBean("sqlSessionFactory"));
+//            System.out.println(context.getBean("sqlSessionFactory"));
+            System.out.println(context.getBean("abc"));
             System.out.println("=========================");
 
         } catch (Exception e) {
