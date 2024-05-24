@@ -13,7 +13,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/post/write.do")
-    public String openPostWrite(@RequestParam(value = 'id', required = false) final Long id, Model model) {
+    public String openPostWrite(@RequestParam(value = "id", required = false) final Long id, Model model) {
         if (id != null) {
             PostResponse post = postService.findPostById(id);
             model.addAttribute("post", post);
@@ -27,5 +27,6 @@ public class PostController {
         return "redirect:/post/list.do";
     }
     
+
 }
 

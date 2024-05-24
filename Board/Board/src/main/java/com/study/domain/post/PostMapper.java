@@ -1,4 +1,4 @@
-package com.study.Board.post;
+package com.study.domain.post;
 
 import org.apache.ibatis.annotations.Mapper;
 

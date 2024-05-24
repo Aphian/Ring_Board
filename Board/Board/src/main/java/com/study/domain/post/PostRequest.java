@@ -1,4 +1,4 @@
-package com.study.Board.post;
+package com.study.domain.post;
 
 import lombok.Getter;
 import lombok.Setter;
