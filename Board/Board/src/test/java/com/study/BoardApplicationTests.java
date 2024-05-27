@@ -1,4 +1,4 @@
-package com.study.Board;
+package com.study;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
@@ -23,8 +23,8 @@ class BoardApplicationTests {
     public void testByApplicationContext() {
         try {
             System.out.println("=========================");
-//            System.out.println(context.getBean("sqlSessionFactory"));
-            System.out.println(context.getBean("abc"));
+            System.out.println(context.getBean("sqlSessionFactory"));
+//            System.out.println(context.getBean("abc"));
             System.out.println("=========================");
 
         } catch (Exception e) {

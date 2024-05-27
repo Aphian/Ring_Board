@@ -1,11 +1,11 @@
-package com.study.Board;
+package com.study;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.study.Board.post.PostMapper;
-import com.study.Board.post.PostRequest;
-import com.study.Board.post.PostResponse;
+import com.study.domain.post.PostMapper;
+import com.study.domain.post.PostRequest;
+import com.study.domain.post.PostResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
