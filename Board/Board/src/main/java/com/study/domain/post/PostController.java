@@ -18,8 +18,18 @@ public class PostController {
             PostResponse post = postService.findPostById(id);
             model.addAttribute("post", post);
         }
+    	
         return "post/write";
     }
+//    public String openPostWrite(Model model) {
+//    	String title = "제목", content = "내용", write = "홍길동";
+//    	
+//    	model.addAttribute("t", title);
+//    	model.addAttribute("c", content);
+//    	model.addAttribute("w", write);
+//    	
+//    	return "post/write";
+//    }
 
     @PostMapping("/post/save.do")
     public String savePost(final PostRequest params) {
