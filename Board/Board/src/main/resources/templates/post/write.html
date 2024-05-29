@@ -63,6 +63,25 @@
             window.onload = () => {
                 initCreatedDate();
             }
+            
+            // 상세보기 렌더링
+            function renderPostInfo() {
+				const post = /*[[ `${post}` ]]*/ `defaultPost`;
+				
+				if (!post) {
+					initCreatedDate();
+					return false;
+				} 
+				
+				const form = document.getElementById('saveForm');
+				const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
+				form.isNotice.checked = post.noticeYn;
+				form.initCreatedDate.value = dayjs(post.createDate).format('YYYY-MM-DD HH:mm');
+				
+				fields.forEach(field => {
+					form[field].value = post[field];
+        		})
+			}
 
 
             // 등록일 초기화
