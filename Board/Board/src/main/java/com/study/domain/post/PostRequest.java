@@ -7,9 +7,10 @@ import lombok.Setter;
 @Setter
 public class PostRequest {
 
-    private long id;
-    private String title;
-    private String content;
-    private String writer;
-    private Boolean noticeYn;
+    private Long id;             
+    private String title;        
+    private String content;     
+    private String writer;       
+    private Boolean noticeYn;    
+
 }

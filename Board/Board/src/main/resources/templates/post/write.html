@@ -82,9 +82,11 @@
                 }
 
                 document.getElementById('saveBtn').disabled = true;
-                form.noticeYn.value = form.isNotice.checked;
-                form.action = (post === null) ? '/post/save.do' : '/post/update.do';
-                form.submit();
+                form.noticeYn.value = form.isNotice.checked ? true : false;
+                
+				const postIsNull = /*[[${post == null}]]*/ true; // 예시로 true로 설정
+        		form.action = postIsNull ? '/post/save.do' : '/post/update.do';
+        		form.submit();
             }
 
         /*]]>*/
