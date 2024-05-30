@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.study.common.dto.MessageDto;
 
 import java.util.List;
 
@@ -55,23 +58,32 @@ public class PostController {
 
     // 신규 게시글 생성
     @PostMapping("/post/save.do")
-    public String savePost(final PostRequest params) {
+    public String savePost(final PostRequest params, Model model) {
         postService.savePost(params);
-        return "redirect:/post/list.do";
+        MessageDto message = new MessageDto("게시글 생성", "/post/list.do", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
     }
 
 
     // 기존 게시글 수정
     @PostMapping("/post/update.do")
-    public String updatePost(final PostRequest params) {
+    public String updatePost(final PostRequest params, Model model) {
         postService.updatePost(params);
-        return "redirect:/post/list.do";
+        MessageDto message = new MessageDto("게시글 수정", "/post/list.do", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
     }
     
     // 게시글 삭제
-    public String deletePost(@RequestParam final Long id) {
+    public String deletePost(@RequestParam final Long id, Model model) {
     	postService.deletePost(id);
-    	return "redirect:/post/list.do";
+    	MessageDto message = new MessageDto("게시글 수정", "/post/list.do", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
+    }
+    
+    // 사용자게에 메시지 전달
+    private String showMessageAndRedirect(final MessageDto params, Model model) {
+    	model.addAttribute("params", params);
+    	return "common/messageRedirect";
     }
 
 }
