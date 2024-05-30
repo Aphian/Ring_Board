@@ -39,13 +39,5 @@ public class PostService {
 	public List<PostResponse> findAllPost() {
         return postMapper.findAll();
     }
-	
-	public MessageDto(String message, String redirectUri, RequestMethod method, Map<String, Object> data) {
-		this.message = message;
-		this.redirectUri = redirectUri;
-		this.method = method;
-        this.data = data;
-        
-	}
 
 }

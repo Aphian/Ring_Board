@@ -17,6 +17,12 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    
+    // 사용자게에 메시지 전달
+    private String showMessageAndRedirect(final MessageDto params, Model model) {
+    	model.addAttribute("params", params);
+    	return "common/messageRedirect";
+    }
 
     // 게시글 작성 페이지
     @GetMapping("/post/write.do")
@@ -80,10 +86,4 @@ public class PostController {
         return showMessageAndRedirect(message, model);
     }
     
-    // 사용자게에 메시지 전달
-    private String showMessageAndRedirect(final MessageDto params, Model model) {
-    	model.addAttribute("params", params);
-    	return "common/messageRedirect";
-    }
-
 }
