@@ -61,7 +61,7 @@
 
 
     <!-- 게시글 삭제 -->
-    <delete id="deleteById" parameterType="long">
+    <delete id="deleteById" parameterType="java.lang.Long">
         UPDATE tb_post
         SET
             delete_yn = 1

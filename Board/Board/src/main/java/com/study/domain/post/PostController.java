@@ -55,7 +55,7 @@ public class PostController {
 
     // 게시글 상세 페이지
     @GetMapping("/post/view.do")
-    public String openPostView(@RequestParam final Long id, Model model) {
+    public String openPostView(@RequestParam(name = "id") final Long id, Model model) {
         PostResponse post = postService.findPostById(id);
         model.addAttribute("post", post);
         return "post/view";
@@ -80,9 +80,10 @@ public class PostController {
     }
     
     // 게시글 삭제
-    public String deletePost(@RequestParam final Long id, Model model) {
+    @PostMapping("/post/delete.do")
+    public String deletePost(@RequestParam(name = "id") final Long id, Model model) {
     	postService.deletePost(id);
-    	MessageDto message = new MessageDto("게시글 수정", "/post/list.do", RequestMethod.GET, null);
+    	MessageDto message = new MessageDto("게시글 삭제", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
     
