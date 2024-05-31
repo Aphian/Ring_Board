@@ -61,7 +61,8 @@
         /*<![CDATA[*/
 
             window.onload = () => {
-                initCreatedDate();
+                // initCreatedDate();
+                renderPostInfo();            
             }
             
             // 상세보기 렌더링
@@ -76,7 +77,7 @@
 				const form = document.getElementById('saveForm');
 				const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
 				form.isNotice.checked = post.noticeYn;
-				form.initCreatedDate.value = dayjs(post.createDate).format('YYYY-MM-DD HH:mm');
+				form.createdDate.value = dayjs(post.createDate).format('YYYY-MM-DD HH:mm');
 				
 				fields.forEach(field => {
 					form[field].value = post[field];
