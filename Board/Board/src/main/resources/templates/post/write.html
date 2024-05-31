@@ -66,7 +66,7 @@
             
             // 상세보기 렌더링
             function renderPostInfo() {
-				const post = '[( ${post} )]';
+				const post = /*[[${post}]]*/ null;
 				
 				if (!post) {
 					initCreatedDate();
@@ -92,6 +92,7 @@
 
             // 게시글 저장(수정)
             function savePost() {
+				const post = /*[[${post}]]*/ null;
                 const form = document.getElementById('saveForm');
                 const fields = [form.title, form.writer, form.content];
                 const fieldNames = ['제목', '이름', '내용'];
@@ -101,10 +102,8 @@
                 }
 
                 document.getElementById('saveBtn').disabled = true;
-                form.noticeYn.value = form.isNotice.checked ? true : false;
-                
-				const postIsNull = /*[[${post == null}]]*/ true; // 예시로 true로 설정
-        		form.action = postIsNull ? '/post/save.do' : '/post/update.do';
+                form.noticeYn.value = form.isNotice.checked;
+        		form.action = post == null ? '/post/save.do' : '/post/update.do';
         		form.submit();
             }
 
