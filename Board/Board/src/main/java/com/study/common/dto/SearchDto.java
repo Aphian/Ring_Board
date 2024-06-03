@@ -1,5 +1,7 @@
 package com.study.common.dto;
 
+import com.study.common.paging.Pagination;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +13,8 @@ public class SearchDto {
     private int recordSize;       
     private int pageSize;         
     private String keyword;       
-    private String searchType;    
+    private String searchType;
+    private Pagination pagination;
 
     public SearchDto() {
         this.page = 1;
@@ -19,8 +22,8 @@ public class SearchDto {
         this.pageSize = 10;
     }
 
-    public int getOffset() {
-        return (page - 1) * recordSize;
-    }
+//    public int getOffset() {
+//        return (page - 1) * recordSize;
+//    }
 
 }
