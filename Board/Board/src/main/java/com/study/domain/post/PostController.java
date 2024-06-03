@@ -13,13 +13,25 @@ import com.study.common.dto.MessageDto;
 import com.study.common.dto.SearchDto;
 import com.study.common.paging.PagingResponse;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
+    
+    private Map<String, Object> queryParamsToMap(final SearchDto queryParams) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("page", queryParams.getPage());
+        data.put("recordSize", queryParams.getRecordSize());
+        data.put("pageSize", queryParams.getPageSize());
+        data.put("keyword", queryParams.getKeyword());
+        data.put("searchType", queryParams.getSearchType());
+        return data;
+    }
     
     // 사용자게에 메시지 전달
     private String showMessageAndRedirect(final MessageDto params, Model model) {
@@ -86,9 +98,9 @@ public class PostController {
     
     // 게시글 삭제
     @PostMapping("/post/delete.do")
-    public String deletePost(@RequestParam(name = "id") final Long id, Model model) {
+    public String deletePost(@RequestParam(name = "id") final Long id, final SearchDto queryParams, Model model) {
     	postService.deletePost(id);
-    	MessageDto message = new MessageDto("게시글 삭제", "/post/list.do", RequestMethod.GET, null);
+    	MessageDto message = new MessageDto("게시글 삭제", "/post/list.do", RequestMethod.GET, queryParamsToMap(queryParams));
         return showMessageAndRedirect(message, model);
     }
     
