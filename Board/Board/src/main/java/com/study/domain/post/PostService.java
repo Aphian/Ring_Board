@@ -3,6 +3,8 @@ package com.study.domain.post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.study.common.dto.SearchDto;
+
 import jakarta.transaction.Transactional;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class PostService {
         return id;
     }
 	
-	public List<PostResponse> findAllPost() {
-        return postMapper.findAll();
+	public List<PostResponse> findAllPost(final SearchDto params) {
+        return postMapper.findAll(params);
     }
 
 }

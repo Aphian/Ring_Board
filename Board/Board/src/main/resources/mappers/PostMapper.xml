@@ -80,6 +80,16 @@
             delete_yn = 0
         ORDER BY
             id DESC
+        LIMIT #{offset}, #{recordSize}
     </select>
+    
+    <select id="count" parameterType="com.study.common.dto.SearchDto" resultType="int">
+		SELETE
+			COUNT(*)
+		FROM
+			tb_post
+		WEERE
+			delete_yn = 0
+	</select>
 
 </mapper>
