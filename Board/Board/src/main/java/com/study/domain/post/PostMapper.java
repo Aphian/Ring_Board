@@ -2,6 +2,8 @@ package com.study.domain.post;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.study.common.dto.SearchDto;
+
 import java.util.List;
 
 @Mapper
@@ -20,7 +22,7 @@ public interface PostMapper {
     void deleteById(Long id);
 
     // 리스트 조회
-    List<PostResponse> findAll();
+    List<PostResponse> findAll(SearchDto params);
 
-    int count();
+    int count(SearchDto params);
 }
