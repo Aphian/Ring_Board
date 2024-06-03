@@ -92,8 +92,8 @@
                     drawPage();
                 }
 
-                const pagination = /*[[ ${response.pagination} ]] */ null;
-                const params = /* [[ ${params} ]] */ null;
+                const pagination = /*[[ ${response.pagination} ]] */ {};
+                const params = /* [[ ${params} ]] */ {};
                 let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
                 drawList(list, num);
                 drawPage(pagination, params);
