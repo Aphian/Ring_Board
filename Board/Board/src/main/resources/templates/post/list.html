@@ -102,17 +102,22 @@
     		}
     		
             function findAllPost() {
-                const list = /*[[ ${response.list} ]]*/ {};
+                const list = [[${response.list}]] ;
 
                 if ( !list.length ) {
                     document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
                     drawPage();
                 }
-
-                const pagination = /*[[ ${response.pagination} ]] */ {};
-                const params = /* [[ ${params} ]] */ {};
+				
+				const pagination = [[ ${response.pagination}]] ;
+                
+                const params = [[ ${params} ]] ;
+                
+                console.log(params);
                 
                 let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
+                console.log(num);
+                
                 drawList(list, num);
                 drawPage(pagination, params);
             }

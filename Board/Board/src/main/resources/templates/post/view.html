@@ -53,16 +53,6 @@
         <script th:inline="javascript">
         /*<![CDATA[*/
         
-        	function goWritePage() {
-        		location.href = '/post/write.do' + location.search;
-    		}
-    		
-    		function goListPage() {
-        		const queryString = new URLSearchParams(location.search);
-        		queryString.delete('id');
-        		location.href = '/post/list.do' + '?' + queryString.toString();
-    		}
-
             // 게시글 삭제
             function deletePost() {
                 const id = '[( ${post.id} )]';
@@ -87,6 +77,16 @@
                 document.body.append(form);
                 document.getElementById('deleteForm').submit();
             }
+            
+			function goWritePage() {
+    			location.href = '/post/write.do' + location.search;
+			}
+    		
+    		function goListPage() {
+        		const queryString = new URLSearchParams(location.search);
+        		queryString.delete('id');
+        		location.href = '/post/list.do' + '?' + queryString.toString();
+    		}
 
         /*]]>*/
 

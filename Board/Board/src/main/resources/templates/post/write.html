@@ -107,6 +107,12 @@
         		form.action = post == null ? '/post/save.do' : '/post/update.do';
         		form.submit();
             }
+            
+            function goListPage() {
+                const queryString = new URLSearchParams(location.search);
+                queryString.delete('id');
+                location.href = '/post/list.do' + '?' + queryString.toString();
+            }
 
         /*]]>*/
         </script>
