@@ -21,7 +21,7 @@
                 return false;
             }
       
-            const redirectUri = [[ ${params.redirectUri} ]];
+            const redirectUri = /* [[ ${params.redirectUri} ]] */ null;
             location.href = redirectUri;
         }
     

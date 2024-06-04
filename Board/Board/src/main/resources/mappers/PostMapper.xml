@@ -108,12 +108,14 @@
             tb_post
         WHERE
             delete_yn = 0
-            <include refid="search"></include>
+            <include refid="search" />
         ORDER BY
             id DESC
         LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
-    
+
+
+    <!-- 게시글 수 카운팅 -->
     <select id="count" parameterType="com.study.common.dto.SearchDto" resultType="int">
         SELECT
             COUNT(*)
@@ -121,9 +123,7 @@
             tb_post
         WHERE
             delete_yn = 0
-            <include refid="search"></include>
+            <include refid="search" />
     </select>
     
-    
-
 </mapper>

@@ -77,11 +77,12 @@
             </section>
         </div> <!--/* .content */-->
     </th:block>
-    <th:block layout:fragment="script">
+	<th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
             window.onload = () => {
 				setQueryStringParams();
+				
                 findAllPost();
             }
             
@@ -99,6 +100,7 @@
             		}
         		})
     		}
+    		
             function findAllPost() {
                 const list = /*[[ ${response.list} ]]*/ {};
 
@@ -110,23 +112,18 @@
                 const pagination = /*[[ ${response.pagination} ]] */ {};
                 const params = /* [[ ${params} ]] */ {};
                 
-                console.log(pagination.totalRecordCount);
-
                 let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
                 drawList(list, num);
                 drawPage(pagination, params);
             }
 
             function drawList(list, num) {
-
-
                 let html = '';
                 list.forEach(row => {
                     html += `
                         <tr>
                             <td><input type="checkbox" /></td>
                             <td>${row.noticeYn === false ? num-- : '공지'}</td>
-                            <td class="tl"><a href="/post/view.do?id=${row.id}">${row.title}</a></td>
                             <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
                             <td>${row.writer}</td>
                             <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
@@ -137,12 +134,6 @@
 
                 document.getElementById('list').innerHTML = html;
             }
-            
-            function goViewPage(id) {
-				const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
-				location.href = '/post/view.do' + queryString; 
-			}
-
 
             function drawPage(pagination, params) {
 
@@ -194,8 +185,13 @@
 
                 location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
             }
+            
+            function goViewPage(id) {
+                const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+                location.href = '/post/view.do' + queryString;
+            }
 
         /*]]>*/
         </script>
-    </th:block>
+	</th:block>
 </html>

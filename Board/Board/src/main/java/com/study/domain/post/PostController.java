@@ -14,7 +14,6 @@ import com.study.common.dto.SearchDto;
 import com.study.common.paging.PagingResponse;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,6 +21,12 @@ import java.util.Map;
 public class PostController {
 
     private final PostService postService;
+    
+    // 사용자게에 메시지 전달
+    private String showMessageAndRedirect(final MessageDto params, Model model) {
+    	model.addAttribute("params", params);
+    	return "common/messageRedirect";
+    }
     
     private Map<String, Object> queryParamsToMap(final SearchDto queryParams) {
         Map<String, Object> data = new HashMap<>();
@@ -33,12 +38,6 @@ public class PostController {
         return data;
     }
     
-    // 사용자게에 메시지 전달
-    private String showMessageAndRedirect(final MessageDto params, Model model) {
-    	model.addAttribute("params", params);
-    	return "common/messageRedirect";
-    }
-
     // 게시글 작성 페이지
     @GetMapping("/post/write.do")
     public String openPostWrite(@RequestParam(value = "id", required = false) final Long id, Model model) {
@@ -48,16 +47,6 @@ public class PostController {
         }
         return "post/write";
     }
-
-//    public String openPostWrite(Model model) {
-//    	String title = "제목", content = "내용", write = "홍길동";
-//    	
-//    	model.addAttribute("t", title);
-//    	model.addAttribute("c", content);
-//    	model.addAttribute("w", write);
-//    	
-//    	return "post/write";
-//    }
 
     // 게시글 리스트 페이지
     @GetMapping("/post/list.do")
