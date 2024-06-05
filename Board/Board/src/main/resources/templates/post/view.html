@@ -64,7 +64,7 @@
         
             // 게시글 삭제
             function deletePost() {
-                const id = '[( ${post.id} )]';
+                const id = [[ ${post.id} ]];
 
                 if ( !confirm(id + '번 게시글을 삭제할까요?') ) {
                     return false;
@@ -96,6 +96,42 @@
         		queryString.delete('id');
         		location.href = '/post/list.do' + '?' + queryString.toString();
     		}
+    		
+    		function countingLength(content) {
+        		if (content.value.length > 300) {
+            	alert('댓글을 300자 이하로 입력해 주세요.');
+            	content.value = content.value.substring(0, 300);
+            	content.focus();
+        		}
+        		document.getElementById('counter').innerText = content.value.length + '/300자';
+    		}
+    
+    	function saveComment() {
+        	const content = document.getElementById('content');
+        	isValid(content, '댓글');
+
+	        const postId = [[ ${post.id} ]];
+    	    const params = {
+        	    postId : postId,
+            	content : content.value,
+            	writer : '홍길동'
+        	}
+
+        	$.ajax({
+	            url : `/posts/${postId}/comments`,
+	            type : 'post',
+	            contentType : 'application/json; charset=utf-8',
+	            dataType : 'json',
+	            data : JSON.stringify(params),
+	            async : false,
+	            success : function (response) {
+	                console.log(response);
+	            },
+            	error : function (request, status, error) {
+                	console.log(error)
+            	}
+        	})
+    	}
 
         /*]]>*/
 
