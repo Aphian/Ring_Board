@@ -22,11 +22,6 @@ public class CommentService {
         return commentMapper.findById(id);
     }
 
-    /**
-     * 댓글 수정
-     * @param params - 댓글 정보
-     * @return PK
-     */
     @Transactional
     public Long updateComment(final CommentRequest params) {
         commentMapper.update(params);
