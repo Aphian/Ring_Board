@@ -15,7 +15,7 @@ public interface CommentMapper {
 	
 	void deleteById(Long id);
 	
-	List<CommentReponse> findALL(Long postId);
+	List<CommentReponse> findAll(Long postId);
 	
 	int count(Long postId);
 
