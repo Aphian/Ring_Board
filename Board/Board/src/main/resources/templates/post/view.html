@@ -54,7 +54,11 @@
                 			<span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i id="counter">0/300자</i></span>
             			</div>
         			</fieldset>
-    			</div>
+    			</div
+    			
+    			<div class="cm_list">
+					
+				</div>
             </section>
         </div> <!--/* .content */-->
     </th:block>
@@ -106,32 +110,50 @@
         		document.getElementById('counter').innerText = content.value.length + '/300자';
     		}
     
-    	function saveComment() {
-        	const content = document.getElementById('content');
-        	isValid(content, '댓글');
-
-	        const postId = [[ ${post.id} ]];
-    	    const params = {
-        	    postId : postId,
-            	content : content.value,
-            	writer : '홍길동'
-        	}
-
-        	$.ajax({
-	            url : `/posts/${postId}/comments`,
-	            type : 'post',
-	            contentType : 'application/json; charset=utf-8',
-	            dataType : 'json',
-	            data : JSON.stringify(params),
-	            async : false,
-	            success : function (response) {
-	                console.log(response);
-	            },
-            	error : function (request, status, error) {
-                	console.log(error)
-            	}
-        	})
-    	}
+	    	function saveComment() {
+	        	const content = document.getElementById('content');
+	        	isValid(content, '댓글');
+	
+		        const postId = [[ ${post.id} ]];
+	    	    const params = {
+	        	    postId : postId,
+	            	content : content.value,
+	            	writer : '홍길동'
+	        	}
+	
+	        	$.ajax({
+		            url : `/posts/${postId}/comments`,
+		            type : 'post',
+		            contentType : 'application/json; charset=utf-8',
+		            dataType : 'json',
+		            data : JSON.stringify(params),
+		            async : false,
+		            success : function (response) {
+		                console.log(response);
+		            },
+	            	error : function (request, status, error) {
+	                	console.log(error)
+	            	}
+	        	})
+	    	}
+	    	
+	    	function findAllComment() {
+				const postId = [[ ${post.id} ]];
+				
+				$.ajax({
+					url : `posts/${postId}/comments`,
+					type : 'get',
+					dataType : 'json',
+					async : false,
+					success : function (response) {
+						console.log(response);
+					},
+					error : function (request, status, error) {
+						console.log(error);
+					}
+					
+				})
+			}
 
         /*]]>*/
 
