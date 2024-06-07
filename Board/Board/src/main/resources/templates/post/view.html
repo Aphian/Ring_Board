@@ -89,12 +89,11 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
-        /*
 			window.onload = () => {
         		findAllComment();
     		}
         
-        */
+        
             // 게시글 삭제
             function deletePost() {
                 const id = [[ ${post.id} ]];
@@ -162,13 +161,10 @@
 		            data : JSON.stringify(params),
 		            async : false,
 		            success : function (response) {
-						/*
             			alert('저장되었습니다.');
                 		content.value = '';
                 		document.getElementById('counter').innerText = '0/300자';
                 		findAllComment();
-						*/
-						console.log(response);
 		            },
 		            
 	            	error : function (request, status, error) {
@@ -176,7 +172,7 @@
 	            	}
 	        	})
 	    	}
-	    	/* 
+	    	 
 	    	// 댓글 전체 조회
 	    	function findAllComment() {
 				const postId = [[ ${post.id} ]];
@@ -206,7 +202,7 @@
 		                            <div class="cont"><div class="txt_con">${row.content}</div></div>
 		                            <p class="func_btns">
 		                                <button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>
-		                                <button type="button" class="btns"><span class="icons icon_del">삭제</span></button>
+		                                <button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>
 		                            </p>
 		                        </div>
                     		`;
@@ -216,8 +212,6 @@
 					},
 					
 					error : function (request, status, error) {
-						console.log(request);
-						console.log(status);
 						console.log(error);
 					}
 					
@@ -260,12 +254,13 @@
 				isValid(writer, '작성자');
 				isValid(content, '수정 내용');
 				
-				const postId = [[ ${post.id} ]];
-				const params = {
-					id : id,
-					postId : content.value,
-					writer : writer.value
-				}
+                const postId = [[ ${post.id} ]];
+                const params = {
+                    id : id,
+                    postId : postId,
+                    content : content.value,
+                    writer : writer.value
+                }
 				
 				$.ajax({
 	            	url : `/posts/${postId}/comments/${id}`,
@@ -285,7 +280,29 @@
 	        	})
 				
 			}
-			*/
+			
+    		function deleteComment(id) {
+	
+    		    if ( !confirm('선택하신 댓글을 삭제할까요?')){
+            		return false;
+        		}
+        
+        		const postId = [[ ${post.id} ]];
+
+        		$.ajax({
+            		url : `/posts/${postId}/comments/${id}`,
+            		type : 'delete',
+            		dataType : 'json',
+            		async : false,
+            		success : function (response) {
+                		alert('삭제되었습니다.');
+                		findAllComment();
+            		},
+            		error : function (request, status, error) {
+                		console.log(error)
+            		}
+        		})
+    		}
 
         /*]]>*/
 
