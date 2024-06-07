@@ -9,13 +9,13 @@ public interface CommentMapper {
 	
 	void save(CommentRequest params);
 	
-	CommentReponse findById(Long id);
+	CommentResponse findById(Long id);
 	
 	void update(CommentRequest params);
 	
 	void deleteById(Long id);
 	
-	List<CommentReponse> findAll(Long postId);
+	List<CommentResponse> findAll(Long postId);
 	
 	int count(Long postId);
 

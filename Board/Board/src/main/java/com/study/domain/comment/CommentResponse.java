@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class CommentReponse {
+public class CommentResponse {
 
     private Long id;                       
     private Long postId;                   

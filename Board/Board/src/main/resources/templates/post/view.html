@@ -89,11 +89,12 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
-        
+        /*
 			window.onload = () => {
         		findAllComment();
     		}
         
+        */
             // 게시글 삭제
             function deletePost() {
                 const id = [[ ${post.id} ]];
@@ -134,9 +135,9 @@
     		// 게시글 내용 제약조건
     		function countingLength(content) {
         		if (content.value.length > 300) {
-            	alert('댓글을 300자 이하로 입력해 주세요.');
-            	content.value = content.value.substring(0, 300);
-            	content.focus();
+            		alert('댓글을 300자 이하로 입력해 주세요.');
+            		content.value = content.value.substring(0, 300);
+            		content.focus();
         		}
         		document.getElementById('counter').innerText = content.value.length + '/300자';
     		}
@@ -161,10 +162,13 @@
 		            data : JSON.stringify(params),
 		            async : false,
 		            success : function (response) {
+						/*
             			alert('저장되었습니다.');
                 		content.value = '';
                 		document.getElementById('counter').innerText = '0/300자';
                 		findAllComment();
+						*/
+						console.log(response);
 		            },
 		            
 	            	error : function (request, status, error) {
@@ -172,13 +176,13 @@
 	            	}
 	        	})
 	    	}
-	    	
+	    	/* 
 	    	// 댓글 전체 조회
 	    	function findAllComment() {
 				const postId = [[ ${post.id} ]];
 				
 				$.ajax({
-					url : `posts/${postId}/comments`,
+					url : `/posts/${postId}/comments`,
 					type : 'get',
 					dataType : 'json',
 					async : false,
@@ -212,6 +216,8 @@
 					},
 					
 					error : function (request, status, error) {
+						console.log(request);
+						console.log(status);
 						console.log(error);
 					}
 					
@@ -279,6 +285,7 @@
 	        	})
 				
 			}
+			*/
 
         /*]]>*/
 
