@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class CommentApiController {
 	}
 	
 	
-	@PostMapping("/posts/{postId}/comments/{id}")
+	@PatchMapping("/posts/{postId}/comments/{id}")
 	public CommentResponse updateComment(@PathVariable(value = "postId", required = false) final Long postId, @PathVariable(value = "id", required = false) final Long id, @RequestBody final CommentRequest params) {
 		commentService.updateComment(params);
 		return commentService.findCommentById(id);
