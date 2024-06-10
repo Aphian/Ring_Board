@@ -58,6 +58,9 @@
     			<div class="cm_list">
 					
 				</div>
+				<div class="paging">
+					
+				</div>
             </section>
         </div> <!--/* .content */-->
     	<div id="commentUpdatePopup" class="popLayer">
@@ -147,12 +150,13 @@
 	        	isValid(content, '댓글');
 	
 		        const postId = [[ ${post.id} ]];
+		        const uri = `/posts/${postId}/comments`;
 	    	    const params = {
 	        	    postId : postId,
 	            	content : content.value,
 	            	writer : '홍길동'
 	        	}
-	
+				/** 
 	        	$.ajax({
 		            url : `/posts/${postId}/comments`,
 		            type : 'post',
@@ -171,6 +175,13 @@
 	                	console.log(error)
 	            	}
 	        	})
+				**/
+				
+				callApi(uri, 'post', params);
+				alert('저장');
+				content.value = '';
+				document.getElementById('counter').innerText = '0/300자';
+				findAllComment();
 	    	}
 	    	 
 	    	// 댓글 전체 조회
@@ -221,7 +232,10 @@
 			// 댓글 수정 팝업
 		    function openCommentUpdatePopup(id) {
         		const postId = [[ ${post.id} ]];
-
+        		const uri = `/posts/${postId}/comments/${id}`
+        		const response = getJson(uri);
+				
+				/** 
         		$.ajax({
             		url : `/posts/${postId}/comments/${id}`,
             		type : 'get',
@@ -237,6 +251,11 @@
                 		console.log(error)
             		}
         		})
+				**/
+        		document.getElementById('modalWriter').value = response.writer;
+        		document.getElementById('modalContent').value = response.content;
+        		document.getElementById('commentUpdateBtn').setAttribute('onclick', `updateComment(${id})`);
+        		layerPop('commentUpdatePopup');
 			}
 			
     		// 댓글 수정 팝업 close
@@ -255,6 +274,7 @@
 				isValid(content, '수정 내용');
 				
                 const postId = [[ ${post.id} ]];
+                const uri = `/posts/${postId}/comments/${id}`;
                 const params = {
                     id : id,
                     postId : postId,
@@ -262,6 +282,7 @@
                     writer : writer.value
                 }
 				
+				/** 
 				$.ajax({
 	            	url : `/posts/${postId}/comments/${id}`,
 	            	type : 'patch',
@@ -278,6 +299,12 @@
 	                	console.log(error)
 	            	}
 	        	})
+				**/
+				
+				callApi(uri, 'patch', params);
+				alert('수정되었습니다.');
+            	closeCommentUpdatePopup();
+            	findAllComment();
 				
 			}
 			
@@ -288,7 +315,9 @@
         		}
         
         		const postId = [[ ${post.id} ]];
-
+        		const uri = `/posts/${postId}/comments/${id}`;
+				
+				/** 
         		$.ajax({
             		url : `/posts/${postId}/comments/${id}`,
             		type : 'delete',
@@ -302,6 +331,10 @@
                 		console.log(error)
             		}
         		})
+				**/
+				callApi(uri, 'delete');
+				alert('삭제되었습니다.');
+        		findAllComment();
     		}
 
         /*]]>*/
