@@ -27,13 +27,13 @@ public class CommentApiController {
 		return commentService.findCommentById(id);
 	}
 	
-	
 //	@GetMapping("/posts/{postId}/comments")
 //	public List<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final Long postId) {
 //		return commentService.findAllComment(postId);
 //	}
 	
-	public PagingResponse<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final CommentSearchDto params) {
+	@GetMapping("/posts/{postId}/comments")
+	public PagingResponse<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final Long postId, final CommentSearchDto params) {
 		return commentService.findAllComment(params);
 	}
 	

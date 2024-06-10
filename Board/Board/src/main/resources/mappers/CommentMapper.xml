@@ -72,14 +72,14 @@
         LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
     
-    <select id="count" parameterType="com.study.domain.comment.CommentSearchDto">
-		SELECT
-			COUNT(*)
-		FROM
-			tb_comment
-		WHERE
-			delete_yn = 0
-			AND post_id = #{postId}
-	</select>
+    <select id="count" parameterType="com.study.domain.comment.CommentSearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_comment
+        WHERE
+            delete_yn = 0
+            AND post_id = #{postId}
+    </select>
 
 </mapper>
