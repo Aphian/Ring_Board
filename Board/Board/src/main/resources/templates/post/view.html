@@ -186,8 +186,26 @@
 	    	 
 	    	// 댓글 전체 조회
 	    	function findAllComment() {
-				const postId = [[ ${post.id} ]];
 				
+				const currentPage = document.querySelector('.paging a.on');
+				page = (page) ? page : (currentPage ? Number(currentPage.text) : 1);
+				
+				
+				const postId = [[ ${post.id} ]];
+				const uri = `/post/${postId}/commnets`;
+				const params = {
+					page : page,
+					recordSize : 5,
+					pageSize : 10,
+					postId : postId,
+				}
+				
+				const response = getJson(uri, params);
+				const pagination = response.pagination;
+				drawComments(response.list);
+				drawPage(pagination, page);
+				
+				/** 
 				$.ajax({
 					url : `/posts/${postId}/comments`,
 					type : 'get',
@@ -227,6 +245,7 @@
 					}
 					
 				})
+				**/
 			}
 			
 			// 댓글 수정 팝업
@@ -336,6 +355,73 @@
 				alert('삭제되었습니다.');
         		findAllComment();
     		}
+    		
+    		function drawComments(list) {
+				
+				if (!list.lengh) {
+					document.querySelector('.cm_list').innerHTML = '<div class="cm_none><p>등록된 댓글이 없습니다.</p></div>';
+					return false;
+				}
+				
+				let commentHTml = '';
+				
+				list.forEach(row => {
+					commentHTml += `
+						<div>
+                            <span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span>
+                            <p class="writer">
+                                <em>${row.writer}</em>
+                                <span class="date">${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</span>
+                            </p>
+                            <div class="cont"><div class="txt_con">${row.content}</div></div>
+                            <p class="func_btns">
+                                <button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>
+                                <button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>
+                            </p>
+                        </div>
+					`;
+				})
+				
+				document.querySelector('.cm_list').innerHTML = commentHTml;
+				
+			}
+			
+			function drawPage(pagination, page) {
+				if (!pagination || !page) {
+					document.querySelector('.paging').innerHTML = '';
+					throw new Error('Missing parameters...');
+				}
+				
+				let html = '';
+				
+				if (pagination.existPrevPage) {
+					html += `
+ 						<a href="javascript:void(0);" onclick="findAllComment(1)" class="page_bt first">첫 페이지</a>
+                		<a href="javascript:void(0);" onclick="findAllComment(${pagination.startPage - 1})" class="page_bt prev">이전 페이지</a>
+					`;
+				}
+				
+				html += '<p>';
+                for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                    html += `<a href="javascript:void(0);" onclick="findAllComment(${i});">${i}</a>`
+                }
+                html += '</p>';
+                
+                if (pagination.existNextPage) {
+                    html += `
+                        <a href="javascript:void(0);" onclick="findAllComment(${pagination.endPage + 1});" class="page_bt next">다음 페이지</a>
+                        <a href="javascript:void(0);" onclick="findAllComment(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
+                    `;
+                }
+                
+ 				const paging = document.querySelector('.paging');
+                paging.innerHTML = html;
+                
+                const currentPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === page || Number(a.text) === pagination.totalPageCount));
+                currentPage.classList.add('on');
+                currentPage.removeAttribute('onclick');
+                
+			}
 
         /*]]>*/
 
