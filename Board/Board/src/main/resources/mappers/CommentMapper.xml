@@ -59,16 +59,27 @@
     </delete>
 
 
-    <select id="findAll" parameterType="java.lang.Long" resultType="com.study.domain.comment.CommentResponse">
+    <select id="findAll" parameterType="com.study.domain.comment.CommentSearchDto" resultType="com.study.domain.comment.CommentResponse">
         SELECT
             <include refid="commentColumns" />
         FROM
             tb_comment
         WHERE
             delete_yn = 0
-            AND post_id = #{value}
+            AND post_id = #{postId}
         ORDER BY
             id DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
+    
+    <select id="count" parameterType="com.study.domain.comment.CommentSearchDto">
+		SELECT
+			COUNT(*)
+		FROM
+			tb_comment
+		WHERE
+			delete_yn = 0
+			AND post_id = #{postId}
+	</select>
 
 </mapper>
