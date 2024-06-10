@@ -18,6 +18,8 @@ public class Pagination {
         if (totalRecordCount > 0) {
             this.totalRecordCount = totalRecordCount;
             calculation(params);
+            // 코드 리펙토링
+            params.setPagination(this);
         }
     }
 

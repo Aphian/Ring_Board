@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.common.paging.PagingResponse;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -26,9 +28,13 @@ public class CommentApiController {
 	}
 	
 	
-	@GetMapping("/posts/{postId}/comments")
-	public List<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final Long postId) {
-		return commentService.findAllComment(postId);
+//	@GetMapping("/posts/{postId}/comments")
+//	public List<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final Long postId) {
+//		return commentService.findAllComment(postId);
+//	}
+	
+	public PagingResponse<CommentResponse> findAllComment(@PathVariable(value = "postId", required = false) final CommentSearchDto params) {
+		return commentService.findAllComment(params);
 	}
 	
 	@GetMapping("/posts/{postId}/comments/{id}")
