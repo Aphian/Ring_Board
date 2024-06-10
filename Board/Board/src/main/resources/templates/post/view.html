@@ -186,9 +186,12 @@
 	    	 
 	    	// 댓글 전체 조회
             function findAllComment(page) {
-
+				
+				/**
                 const currentPage = document.querySelector('.paging a.on');
-                page = (page) ? page : (currentPage ? Number(currentPage.text) : 1);
+				**/
+				const uriPage = new URLSearchParams(location.search).get('page');
+                page = (page) ? page : (uriPage ? Number(uriPage) : 1);
 
                 const postId = [[ ${post.id} ]];
                 const uri = `/posts/${postId}/comments`;
@@ -423,6 +426,10 @@
                 const currentPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === page || Number(a.text) === pagination.totalPageCount));
                 currentPage.classList.add('on');
                 currentPage.removeAttribute('onclick');
+                
+                const postId = new URLSearchParams(location.search).get('id');
+                history.replaceState({}, '', location.pathname + `?id=${postId}&page=${currentPage.text}`);
+
             }
 
         /*]]>*/
