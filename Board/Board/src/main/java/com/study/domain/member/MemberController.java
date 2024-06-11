@@ -18,10 +18,10 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	
-	@GetMapping("/login.do")
-	public String openLogin() {
-		return "member/login";
-	}
+    @GetMapping("/login.do")
+    public String openLogin() {
+        return "member/login";
+    }
 	
 	@PostMapping("/members")
 	@ResponseBody
@@ -53,6 +53,4 @@ public class MemberController {
 		return memberService.countMemberByLoginId(loginId);
 	}
 	
-	
-
 }
