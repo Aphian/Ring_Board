@@ -19,7 +19,7 @@ public class MemberService {
 		MemberResponse member = findMemberByLoginId(loginId);
 		String encodedPassword = (member == null) ? "" : member.getPassword();
 		
-		if (member == null || passwordEncoder.matches(password, encodedPassword)) {
+		if (member == null || passwordEncoder.matches(password, encodedPassword) == false) {
 			return null;
 		}
 		
