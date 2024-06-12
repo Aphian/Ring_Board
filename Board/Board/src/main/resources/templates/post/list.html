@@ -113,10 +113,7 @@
                 
                 const params = [[ ${params} ]] ;
                 
-                console.log(params);
-                
                 let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
-                console.log(num);
                 
                 drawList(list, num);
                 drawPage(pagination, params);

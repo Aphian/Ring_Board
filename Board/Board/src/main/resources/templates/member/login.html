@@ -106,7 +106,6 @@
 	<script th:src="@{/js/common.js}"></script>
 	<script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script>
 	<script>
-
 		// 회원가입 팝업 open
 		function openSignupPopup() {
 			layerPop('signupPopup')
@@ -128,7 +127,7 @@
 			const loginId = document.querySelector('#signupForm input[name="loginId"]');
 			isValid(loginId, '아이디');
 			const count = getJson(`/member-count`, { loginId : loginId.value });
-
+			
 			if (count > 0) {
 				alert('이미 가입된 아이디가 있습니다.');
 				loginId.focus();
@@ -208,7 +207,7 @@
 			$.ajax ({
 				
 				url : '/login',
-				type : 'POST',
+				type : 'post',
 				dataType : 'json',
 				data : {
 					loginId: form.loginId.value,

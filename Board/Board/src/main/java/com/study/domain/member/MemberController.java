@@ -21,40 +21,46 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	
+	// 로그인 페이지
     @GetMapping("/login.do")
     public String openLogin() {
         return "member/login";
     }
 	
+    // 회원 정보 저장
 	@PostMapping("/members")
 	@ResponseBody
 	public Long saveMember(@RequestBody final MemberRequest params) {
 		return memberService.saveMember(params);
 	}
 	
+	// 회원 정보 조회
 	@GetMapping("/members/{loginId}")
 	@ResponseBody
 	public MemberResponse findMemberByLoginId(@PathVariable(value = "loginId", required = false) final String loginId) {
 		return memberService.findMemberByLoginId(loginId);
 	}
 	
+	// 회원 정보 수정
 	@PatchMapping("/members/{id}")
 	@ResponseBody
 	public Long updateMember(@PathVariable(value = "id", required = false) final Long id, @RequestBody final MemberRequest params) {
 		return memberService.updateMember(params);
 	}
 	
+	// 회원 탈퇴
 	@DeleteMapping("/members/{id}")
 	@ResponseBody
 	public Long deleteMember(final Long id) {
 		return memberService.deleteMemberById(id);
 	}
 	
-	@GetMapping("/member-count")
-	@ResponseBody
-	public int countMemberByLoginId(@RequestParam final String loginId) {
-		return memberService.countMemberByLoginId(loginId);
-	}
+	// ID 중복 체크
+    @GetMapping("/member-count")
+    @ResponseBody
+    public int countMemberByLoginId(@RequestParam final String loginId) {
+        return memberService.countMemberByLoginId(loginId);
+    }
 	
 	// 로그인
 	@PostMapping("/login")

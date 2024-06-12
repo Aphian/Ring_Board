@@ -36,7 +36,7 @@ function getJson(uri, params) {
 	$.ajax({
 		url : uri,
 		type : 'get',
-		datatype : 'json',
+		dataType : 'json',
 		data : params,
 		async : false,
 		success : function (response) {
