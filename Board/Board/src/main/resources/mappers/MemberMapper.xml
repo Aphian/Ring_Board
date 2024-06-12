@@ -80,7 +80,7 @@
         FROM
             tb_member
         WHERE
-            login_id = #{loginId}
+            login_id = #{value}
     </select>
 
 </mapper>
