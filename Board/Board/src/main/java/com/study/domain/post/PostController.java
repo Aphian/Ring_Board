@@ -13,7 +13,12 @@ import com.study.common.dto.MessageDto;
 import com.study.common.dto.SearchDto;
 import com.study.common.paging.PagingResponse;
 
+import com.study.common.file.FileUtils;
+import com.study.domain.file.FileRequest;
+import com.study.domain.file.FileService;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,6 +26,8 @@ import java.util.Map;
 public class PostController {
 
     private final PostService postService;
+    private final FileService fileService;
+    private final FileUtils fileUtils;
     
     // 사용자게에 메시지 전달
     private String showMessageAndRedirect(final MessageDto params, Model model) {
@@ -71,7 +78,11 @@ public class PostController {
     // 신규 게시글 생성
     @PostMapping("/post/save.do")
     public String savePost(final PostRequest params, Model model) {
-        postService.savePost(params);
+    	// postService.savePost(params);
+    	Long id = postService.savePost(params);
+    	List<FileRequest> files = fileUtils.uploadFiles(params.getFiles());
+    	fileService.saveFiles(id, files);
+    	
         MessageDto message = new MessageDto("게시글 생성", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
