@@ -56,9 +56,9 @@ public class MemberController {
 	}
 	
 	// ID 중복 체크
-    @GetMapping("/member-count")
+    @GetMapping("/member_count")
     @ResponseBody
-    public int countMemberByLoginId(@RequestParam final String loginId) {
+    public int countMemberByLoginId(@RequestParam(value = "loginId", required = false) final String loginId) {
         return memberService.countMemberByLoginId(loginId);
     }
 	

@@ -126,7 +126,7 @@
 		function checkLoginId() {
 			const loginId = document.querySelector('#signupForm input[name="loginId"]');
 			isValid(loginId, '아이디');
-			const count = getJson(`/member-count`, { loginId : loginId.value });
+			const count = getJson(`/member_count`, { loginId : loginId.value });
 			
 			if (count > 0) {
 				alert('이미 가입된 아이디가 있습니다.');
@@ -207,7 +207,7 @@
 			$.ajax ({
 				
 				url : '/login',
-				type : 'post',
+				type : 'POST',
 				dataType : 'json',
 				data : {
 					loginId: form.loginId.value,

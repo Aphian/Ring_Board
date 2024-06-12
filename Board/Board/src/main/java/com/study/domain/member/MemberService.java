@@ -13,6 +13,21 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 	private final PasswordEncoder passwordEncoder;
 	
+	// 로그인
+	public MemberResponse login(final String loginId, final String password) {
+		
+		MemberResponse member = findMemberByLoginId(loginId);
+		String encodedPassword = (member == null) ? "" : member.getPassword();
+		
+		if (member == null || passwordEncoder.matches(password, encodedPassword)) {
+			return null;
+		}
+		
+		member.clearPassword();
+		return member;
+		
+	}
+	
 	// 회원가입
 	@Transactional
 	public Long saveMember(final MemberRequest params) {
@@ -45,21 +60,6 @@ public class MemberService {
 	// 회원 수 카운팅
 	public int countMemberByLoginId(final String loginId) {
 		return memberMapper.countByLoginId(loginId);
-	}
-	
-	// 로그인
-	public MemberResponse login(final String loginId, final String password) {
-		
-		MemberResponse member = findMemberByLoginId(loginId);
-		String encodedPassword = (member == null) ? "" : member.getPassword();
-		
-		if (member == null || passwordEncoder.matches(password, encodedPassword)) {
-			return null;
-		}
-		
-		member.clearPassword();
-		return member;
-		
 	}
 
 }
