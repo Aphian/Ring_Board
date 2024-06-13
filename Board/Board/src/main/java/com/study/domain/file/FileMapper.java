@@ -14,5 +14,7 @@ public interface FileMapper {
 	List<FileResponse> findAllByIds(List<Long> ids);
 	
 	void deleteAllByIds(List<Long> ids);
+	
+	FileResponse findById(Long id);
 
 }

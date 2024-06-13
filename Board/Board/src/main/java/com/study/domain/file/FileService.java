@@ -58,5 +58,10 @@ public class FileService {
 		fileMapper.deleteAllByIds(ids);
 		
 	}
+	
+	// 파일 상세정보 조회
+	public FileResponse findFileById(final Long id) {
+		return fileMapper.findById(id);
+	}
 
 }
