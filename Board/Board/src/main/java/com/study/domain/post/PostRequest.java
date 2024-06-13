@@ -19,5 +19,6 @@ public class PostRequest {
     private Boolean noticeYn;
     
     private List<MultipartFile> files = new ArrayList<>();
+    private List<Long> removeFileIds = new ArrayList<>();
 
 }

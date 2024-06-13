@@ -16,6 +16,7 @@ public class FileService {
 	
 	private final FileMapper fileMapper;
 	
+	// 파일 정보 저장
 	@Transactional
 	public void saveFiles(final Long postId, final List<FileRequest> files) {
 		
@@ -31,10 +32,12 @@ public class FileService {
 		
 	}
 	
+	// 파일 리스트 조회 -> 전체적
 	public List<FileResponse> findAllFileByPostId(final Long postId) {
 		return fileMapper.findAllByPostId(postId);
 	}
 	
+	// 파일 리스트 조회 -> 게시글에서의 파일 리스트
 	public List<FileResponse> findAllFileByIds(final List<Long> ids) {
 		
 		if (CollectionUtils.isEmpty(ids)) {
@@ -45,6 +48,7 @@ public class FileService {
 		
 	}
 	
+	// 파일 삭제
 	@Transactional
 	public void deleteAllFileByIds(final List<Long> ids) {
 		

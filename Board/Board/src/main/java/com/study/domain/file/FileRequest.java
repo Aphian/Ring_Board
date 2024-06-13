@@ -1,5 +1,8 @@
 package com.study.domain.file;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,6 +14,8 @@ public class FileRequest {
 	private String originalName;
 	private String saveName;
 	private long size;
+	
+	private List<Long> removeFileIds = new ArrayList<>();
 	
 	@Builder
 	public FileRequest(String originalName, String saveName, long size) {

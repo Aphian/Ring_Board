@@ -15,6 +15,7 @@ import com.study.common.paging.PagingResponse;
 
 import com.study.common.file.FileUtils;
 import com.study.domain.file.FileRequest;
+import com.study.domain.file.FileResponse;
 import com.study.domain.file.FileService;
 
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class PostController {
     	return "common/messageRedirect";
     }
     
+    // Query 파라미터 Map 번환
     private Map<String, Object> queryParamsToMap(final SearchDto queryParams) {
         Map<String, Object> data = new HashMap<>();
         data.put("page", queryParams.getPage());
@@ -90,8 +92,15 @@ public class PostController {
 
     // 기존 게시글 수정
     @PostMapping("/post/update.do")
-    public String updatePost(final PostRequest params, Model model) {
+    public String updatePost(final PostRequest params, final SearchDto queryParams, Model model) {
         postService.updatePost(params);
+        
+        List<FileRequest> uploadFiles = fileUtils.uploadFiles(params.getFiles());
+        fileService.saveFiles(params.getId(), uploadFiles);
+        List<FileResponse> deleteFiles = fileService.findAllFileByIds(params.getRemoveFileIds());
+        fileUtils.deleteFiles(deleteFiles);
+        fileService.deleteAllFileByIds(params.getRemoveFileIds());
+        
         MessageDto message = new MessageDto("게시글 수정", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
