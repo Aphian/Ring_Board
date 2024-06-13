@@ -18,6 +18,10 @@
 
                     <!--/* 서버로 전달할 공지글 여부 */-->
                     <input type="hidden" id="noticeYn" name="noticeYn" />
+                    
+                    <!--/* 삭제 처리할 파일 번호 */-->
+                    <input type="hidden" id="removeFileIds" name="removeFileIds" />
+                    
                     <table class="tb tb_row">
                         <colgroup>
                             <col style="width:15%;" /><col style="width:35%;" /><col style="width:15%;" /><col style="width:35%;" />
@@ -84,6 +88,22 @@
                 findAllFile();            
             }
             
+		    // 파일 삭제 처리
+		    const removeFileId = (function() {
+		        const ids = [];
+		        return {
+		            add(id) {
+		                if (ids.includes(id)) {
+		                    return false;
+		                }
+		                ids.push(id);
+		            },
+		            getAll() {
+		                return ids;
+		            }
+		        }
+		    }());
+            
             // 전체 파일 조회
             function findAllFile() {
 				const post = [[ ${post} ]];
@@ -111,22 +131,6 @@
 	        	})
 			}
 		    
-		    // 파일 삭제 처리
-		    const removeFileId = (function() {
-		        const ids = [];
-		        return {
-		            add(id) {
-		                if (ids.includes(id)) {
-		                    return false;
-		                }
-		                ids.push(id);
-		            },
-		            getAll() {
-		                return ids;
-		            }
-		        }
-		    }());
-
             // 상세보기 렌더링
             function renderPostInfo() {
 				const post = /*[[${post}]]*/ null;
@@ -163,9 +167,18 @@
                 for (let i = 0, len = fields.length; i < len; i++) {
                     isValid(fields[i], fieldNames[i]);
                 }
+                
+                new URLSearchParams(location.search).forEach((value, key) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.append(input);
+                })
 
                 document.getElementById('saveBtn').disabled = true;
                 form.noticeYn.value = form.isNotice.checked;
+                form.removeFileIds.value = removeFileId.getAll().join();
         		form.action = post == null ? '/post/save.do' : '/post/update.do';
         		form.submit();
             }

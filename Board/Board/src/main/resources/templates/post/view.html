@@ -101,8 +101,28 @@
 			window.onload = () => {
         		findAllComment();
     		}
-        
-        
+            // 작성 페이지 이동
+			function goWritePage() {
+    			location.href = '/post/write.do' + location.search;
+			}
+    		
+    		// 리스트 페이지 이동
+    		function goListPage() {
+        		const queryString = new URLSearchParams(location.search);
+        		queryString.delete('id');
+        		location.href = '/post/list.do' + '?' + queryString.toString();
+    		}
+    		
+    		// 게시글 내용 제약조건
+    		function countingLength(content) {
+        		if (content.value.length > 300) {
+            		alert('댓글을 300자 이하로 입력해 주세요.');
+            		content.value = content.value.substring(0, 300);
+            		content.focus();
+        		}
+        		document.getElementById('counter').innerText = content.value.length + '/300자';
+    		}
+    		
             // 게시글 삭제
             function deletePost() {
                 const id = [[ ${post.id} ]];
@@ -127,28 +147,6 @@
                 document.body.append(form);
                 document.getElementById('deleteForm').submit();
             }
-            
-            // 작성 페이지 이동
-			function goWritePage() {
-    			location.href = '/post/write.do' + location.search;
-			}
-    		
-    		// 리스트 페이지 이동
-    		function goListPage() {
-        		const queryString = new URLSearchParams(location.search);
-        		queryString.delete('id');
-        		location.href = '/post/list.do' + '?' + queryString.toString();
-    		}
-    		
-    		// 게시글 내용 제약조건
-    		function countingLength(content) {
-        		if (content.value.length > 300) {
-            		alert('댓글을 300자 이하로 입력해 주세요.');
-            		content.value = content.value.substring(0, 300);
-            		content.focus();
-        		}
-        		document.getElementById('counter').innerText = content.value.length + '/300자';
-    		}
     		
     		// 댓글 저장
 	    	function saveComment() {
