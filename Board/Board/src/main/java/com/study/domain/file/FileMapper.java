@@ -8,5 +8,11 @@ import java.util.List;
 public interface FileMapper {
 	
 	void saveAll(List<FileRequest> files);
+	
+	List<FileResponse> findAllByPostId(Long postId);
+	
+	List<FileResponse> findAllByIds(List<Long> ids);
+	
+	void deleteAllByIds(List<Long> ids);
 
 }
