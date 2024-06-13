@@ -79,9 +79,54 @@
 
             window.onload = () => {
                 // initCreatedDate();
-                renderPostInfo();            
+                renderPostInfo();
+                
+                findAllFile();            
             }
             
+            // 전체 파일 조회
+            function findAllFile() {
+				const post = [[ ${post} ]];
+				if ( !post ) {
+					return false;
+				}
+				
+				const response = getJson(`/posts/${post.id}/files`);
+				
+				if ( !response.length ) {
+					return false;
+				}
+				
+				for (let i = 0, len = (response.length - 1); i < len; i++) {
+					addFile();
+				}
+				
+        		const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
+        		filenameInputs.forEach((input, i) => {
+	            	const fileInput = input.nextElementSibling.firstElementChild;
+	            	const fileRemoveBtn = input.parentElement.nextElementSibling;
+	            	fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
+	            	fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
+	            	input.value = response[i].originalName;
+	        	})
+			}
+		    
+		    // 파일 삭제 처리
+		    const removeFileId = (function() {
+		        const ids = [];
+		        return {
+		            add(id) {
+		                if (ids.includes(id)) {
+		                    return false;
+		                }
+		                ids.push(id);
+		            },
+		            getAll() {
+		                return ids;
+		            }
+		        }
+		    }());
+
             // 상세보기 렌더링
             function renderPostInfo() {
 				const post = /*[[${post}]]*/ null;
@@ -152,6 +197,10 @@
 				
 				filename.value = file.name;
 				
+				if (id) {
+					removeFileId.add(id);
+				}
+				
 			}
 			
 			// 파일 추가
@@ -171,6 +220,11 @@
 		    
 		    // 파일 삭제
 		    function removeFile(element) {
+				
+				if (id) {
+					removeFileId.add(id);
+				}
+				
 		        const fileAddBtn = element.nextElementSibling;
 		        if (fileAddBtn) {
 		            const inputs = element.previousElementSibling.querySelectorAll('input');
