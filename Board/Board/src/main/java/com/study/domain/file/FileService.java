@@ -2,6 +2,7 @@ package com.study.domain.file;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -27,6 +28,30 @@ public class FileService {
 		}
 		
 		fileMapper.saveAll(files);
+		
+	}
+	
+	public List<FileResponse> findAllFileByPostId(final Long postId) {
+		return fileMapper.findAllByPostId(postId);
+	}
+	
+	public List<FileResponse> findAllFileByIds(final List<Long> ids) {
+		
+		if (CollectionUtils.isEmpty(ids)) {
+			return Collections.emptyList();
+		}
+		
+		return fileMapper.findAllByIds(ids);
+		
+	}
+	
+	@Transactional
+	public void deleteAllFileByIds(final List<Long> ids) {
+		
+		if (CollectionUtils.isEmpty(ids)) {
+			return ;
+		}
+		fileMapper.deleteAllByIds(ids);
 		
 	}
 
