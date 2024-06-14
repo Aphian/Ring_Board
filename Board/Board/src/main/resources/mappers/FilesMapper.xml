@@ -36,7 +36,7 @@
     </insert>
     
     <!-- 파일 리스트 조회 -->
-    <select id="findAllByPostId" parameterType="java.lang.long" resultType="com.study.domain.file.FileResponse">
+    <select id="findAllByPostId" parameterType="java.lang.Long" resultType="com.study.domain.file.FileResponse">
         SELECT
             <include refid="fileColumns" />
         FROM
@@ -78,7 +78,7 @@
     </delete>
     
     <!-- 파일 상세정보 조회 -->
-    <select id="findById" parameterType="java.lang.long" resultType="com.study.domain.file.FileResponse">
+    <select id="findById" parameterType="java.lang.Long" resultType="com.study.domain.file.FileResponse">
         SELECT
             <include refid="fileColumns" />
         FROM

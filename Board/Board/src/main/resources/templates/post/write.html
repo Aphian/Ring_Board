@@ -190,7 +190,7 @@
             }
             
             // 파일 선택
-            function selectFile(element) {
+            function selectFile(element, id) {
 				const file = element.file[0];
 				const filename = element.closest('.file_input').firstElementChild;
 				
@@ -232,7 +232,7 @@
 		    }
 		    
 		    // 파일 삭제
-		    function removeFile(element) {
+		    function removeFile(element, id) {
 				
 				if (id) {
 					removeFileId.add(id);
