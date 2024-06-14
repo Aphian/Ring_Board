@@ -10,7 +10,7 @@
     /* <![CDATA[ */
     
         window.onload = () => {
-            const message = '[( ${params.message} )]';
+            const message = [[ ${params.message} ]];
             if (message) {
                 alert(message);
             }
@@ -21,7 +21,7 @@
                 return false;
             }
       
-            const redirectUri = /* [[ ${params.redirectUri} ]] */ null;
+            const redirectUri = [[ ${params.redirectUri} ]];
             location.href = redirectUri;
         }
     

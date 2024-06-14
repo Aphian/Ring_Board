@@ -30,7 +30,7 @@ public class PostController {
     private final FileService fileService;
     private final FileUtils fileUtils;
     
-    // 사용자게에 메시지 전달
+    // 사용자에게 메시지 전달
     private String showMessageAndRedirect(final MessageDto params, Model model) {
     	model.addAttribute("params", params);
     	return "common/messageRedirect";
@@ -84,7 +84,6 @@ public class PostController {
     	Long id = postService.savePost(params);
     	List<FileRequest> files = fileUtils.uploadFiles(params.getFiles());
     	fileService.saveFiles(id, files);
-    	
         MessageDto message = new MessageDto("게시글 생성", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
