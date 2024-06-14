@@ -24,16 +24,14 @@ public class FileApiController {
 	private final FileUtils fileUtils;
 	
 	// 파일 리스트 조회
-	@GetMapping("/posts/{postId}/files")
-	public List<FileResponse> findAllFileByPostId(@PathVariable(value = "postId", required = false) final Long postId) {
-		
-		return fileService.findAllFileByPostId(postId);
-		
-	}
+    @GetMapping("/posts/{postId}/files")
+    public List<FileResponse> findAllFileByPostId(@PathVariable(value = "postId", required = false) final Long postId) {
+        return fileService.findAllFileByPostId(postId);
+    }
 	
     // 첨부파일 다운로드
     @GetMapping("/posts/{postId}/files/{fileId}/download")
-    public ResponseEntity<Resource> downloadFile(@PathVariable(value = "postId", required = false) final Long postId, @PathVariable final Long fileId) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable(value = "postId", required = false) final Long postId, @PathVariable(value = "fileId", required = false) final Long fileId) {
         FileResponse file = fileService.findFileById(fileId);
         Resource resource = fileUtils.readFileAsResource(file);
         try {

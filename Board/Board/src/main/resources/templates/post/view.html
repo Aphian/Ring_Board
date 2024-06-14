@@ -99,8 +99,97 @@
         <script th:inline="javascript">
         /*<![CDATA[*/
 			window.onload = () => {
+				findAllFile();
+				
         		findAllComment();
     		}
+    		
+		    // 전체 파일 조회
+            function findAllFile() {
+
+                const postId = [[ ${post.id}]];
+                const response = getJson(`/posts/${postId}/files`);
+                
+                if ( !response.length ) {
+                    return false;
+                }
+
+                let fileHtml = '<div class="file_down"><div class="cont">';
+                response.forEach(row => {
+                    fileHtml += `<a href="/posts/${postId}/files/${row.id}/download"><span class="icons"><i class="fas fa-folder-open"></i></span>${row.originalName}</a>`;
+                })
+                fileHtml += '</div></div>';
+
+                document.getElementById('files').innerHTML = fileHtml;
+            }
+            
+			// 댓글 전체 조회
+            function findAllComment(page) {
+				
+				/**
+                const currentPage = document.querySelector('.paging a.on');
+				**/
+				const uriPage = new URLSearchParams(location.search).get('page');
+                page = (page) ? page : (uriPage ? Number(uriPage) : 1);
+
+                const postId = [[ ${post.id} ]];
+                const uri = `/posts/${postId}/comments`;
+                const params = {
+                    page : page,
+                    recordSize : 5,
+                    pageSize : 10,
+                    postId : postId,
+                }
+
+                const response = getJson(uri, params);
+                const pagination = response.pagination;
+                
+                drawComments(response.list);
+                drawPage(pagination, page);
+				
+				/** 
+				$.ajax({
+					url : `/posts/${postId}/comments`,
+					type : 'get',
+					dataType : 'json',
+					async : false,
+					
+					success : function (response) {
+						if ( !response.length ) {
+							document.querySelector('.cm_list').innerHTML = '<div class="cm_none"><p>등록된 댓글이 없습니다.</p></div>';
+							return false;
+						}
+						
+						let commentHtml = '';
+						
+						response.forEach(row => {
+                    		commentHtml += `
+		                        <div>
+		                            <span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span>
+		                            <p class="writer">
+		                                <em>${row.writer}</em>
+		                                <span class="date">${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</span>
+		                            </p>
+		                            <div class="cont"><div class="txt_con">${row.content}</div></div>
+		                            <p class="func_btns">
+		                                <button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>
+		                                <button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>
+		                            </p>
+		                        </div>
+                    		`;
+                		})
+
+                		document.querySelector('.cm_list').innerHTML = commentHtml;
+					},
+					
+					error : function (request, status, error) {
+						console.log(error);
+					}
+					
+				})
+				**/
+			}
+    		
             // 작성 페이지 이동
 			function goWritePage() {
     			location.href = '/post/write.do' + location.search;
@@ -188,72 +277,6 @@
 				findAllComment();
 	    	}
 	    	 
-	    	// 댓글 전체 조회
-            function findAllComment(page) {
-				
-				/**
-                const currentPage = document.querySelector('.paging a.on');
-				**/
-				const uriPage = new URLSearchParams(location.search).get('page');
-                page = (page) ? page : (uriPage ? Number(uriPage) : 1);
-
-                const postId = [[ ${post.id} ]];
-                const uri = `/posts/${postId}/comments`;
-                const params = {
-                    page : page,
-                    recordSize : 5,
-                    pageSize : 10,
-                    postId : postId,
-                }
-
-                const response = getJson(uri, params);
-                const pagination = response.pagination;
-                
-                drawComments(response.list);
-                drawPage(pagination, page);
-				
-				/** 
-				$.ajax({
-					url : `/posts/${postId}/comments`,
-					type : 'get',
-					dataType : 'json',
-					async : false,
-					
-					success : function (response) {
-						if ( !response.length ) {
-							document.querySelector('.cm_list').innerHTML = '<div class="cm_none"><p>등록된 댓글이 없습니다.</p></div>';
-							return false;
-						}
-						
-						let commentHtml = '';
-						
-						response.forEach(row => {
-                    		commentHtml += `
-		                        <div>
-		                            <span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span>
-		                            <p class="writer">
-		                                <em>${row.writer}</em>
-		                                <span class="date">${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</span>
-		                            </p>
-		                            <div class="cont"><div class="txt_con">${row.content}</div></div>
-		                            <p class="func_btns">
-		                                <button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>
-		                                <button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>
-		                            </p>
-		                        </div>
-                    		`;
-                		})
-
-                		document.querySelector('.cm_list').innerHTML = commentHtml;
-					},
-					
-					error : function (request, status, error) {
-						console.log(error);
-					}
-					
-				})
-				**/
-			}
 			
 			// 댓글 수정 팝업
 		    function openCommentUpdatePopup(id) {
@@ -434,25 +457,6 @@
                 const postId = new URLSearchParams(location.search).get('id');
                 history.replaceState({}, '', location.pathname + `?id=${postId}&page=${currentPage.text}`);
 
-            }
-            
-		    // 전체 파일 조회
-            function findAllFile() {
-
-                const postId = [[ ${post.id}]];
-                const response = getJson(`/posts/${postId}/files`);
-
-                if ( !response.length ) {
-                    return false;
-                }
-
-                let fileHtml = '<div class="file_down"><div class="cont">';
-                response.forEach(row => {
-                    fileHtml += `<a href="/posts/${postId}/files/${row.id}/download"><span class="icons"><i class="fas fa-folder-open"></i></span>${row.originalName}</a>`;
-                })
-                fileHtml += '</div></div>';
-
-                document.getElementById('files').innerHTML = fileHtml;
             }
 
         /*]]>*/
